@@ -5,6 +5,7 @@ module Tot
     attr_reader :name
 
     def initialize(env)
+      @env = env
       @name = extract_name
       @request = Rack::Request.new(env)
       @response = Rack::Response.new

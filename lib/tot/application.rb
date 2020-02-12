@@ -23,6 +23,8 @@ module Tot
 
     def call(env)
       route = @router.route_for(env)
+      return response_not_connect(env) unless route
+
       controller = route.controller.new(env)
       action = route.action
 
@@ -51,6 +53,14 @@ module Tot
 
     def make_response(controller, action)
       controller.make_response(action)
+    end
+
+    def response_not_connect(env)
+      [
+        404,
+        { "Content‐Type" => "text/plain" },
+        ["Couldn't connect to the desired URL.\nURL '#{env["REQUEST_URI"]}' doesn't exist\n"],
+      ]
     end
   end
 end

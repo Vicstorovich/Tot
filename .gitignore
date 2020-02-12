@@ -71,5 +71,6 @@ build-iPhoneSimulator/
 # Ignore all local history of files
 .history
 tot.code-workspace
+log/*
 
 # End of https://www.gitignore.io/api/ruby,visualstudiocode
