@@ -9,7 +9,11 @@ module Tot
     def make_response(action)
       [
         200,
-        { "Content-Type" => "text/plain", "X-Tot-Action" => action },
+        {
+          "Content-Type" => "text/plain",
+          "X-Tot-Controller" => self.class.name,
+          "X-Tot-Action" => action,
+        },
         ["Plain framework in action!\n", @env_hash],
       ]
     end

@@ -16,7 +16,7 @@ module Tot
 
     def route_for(env)
       method = env["REQUEST_METHOD"].downcase.to_sym
-      path = env["REQUEST_PATH"]
+      path = env["PATH_INFO"]
 
       @routes.find { |route| route.match?(method, path) }
     end
@@ -25,11 +25,16 @@ module Tot
 
     def add_route(method, path, route_point)
       route_point = route_point.split("#")
+      controller = controller_from_string(route_point.first)
+      # controller = TestsController
       action = route_point.last
-
-      route = Route.new(method, path, Controller, action)
+      route = Route.new(method, path, controller, action)
 
       @routes.push(route)
+    end
+
+    def controller_from_string(controller_name)
+      Object.const_get("#{controller_name.capitalize}Controller")
     end
   end
 end

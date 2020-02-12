@@ -1,7 +1,14 @@
+require "pathname"
 require_relative "tot/application"
 
 module Tot
-  def self.application
-    Application.instance
+  class << self
+    def application
+      Application.instance
+    end
+
+    def root
+      Pathname.new(File.expand_path("..", __dir__))
+    end
   end
 end
