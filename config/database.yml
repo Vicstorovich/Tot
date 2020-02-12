@@ -1,0 +1,2 @@
+adapter: sqlite
+database: db/tot_app.sqlite
