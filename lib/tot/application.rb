@@ -1,4 +1,6 @@
+require "yaml"
 require "singleton"
+require "sequel"
 require_relative "router"
 require_relative "controller"
 
@@ -6,11 +8,15 @@ module Tot
   class Application
     include Singleton
 
+    attr_reader :db
+
     def initialize
       @router = Router.new
+      @db = nil
     end
 
     def bootstrap!
+      require_database
       require_app
       require_routes
     end
@@ -28,6 +34,12 @@ module Tot
     end
 
     private
+
+    def require_database
+      database_config = YAML.load_file(Tot.root.join("config/database.yml"))
+      database_config["database"] = Tot.root.join(database_config["database"])
+      @db = Sequel.connect(database_config)
+    end
 
     def require_app
       Dir["#{Tot.root}/app/**/*.rb"].each { |file| require file }

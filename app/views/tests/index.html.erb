@@ -10,6 +10,12 @@
     <h1 style="text-align: center;">"Tot framework in action!</h1>
     <h2 style="text-align: center;">Index action</h2>
     <h3 style="text-align: center;"><%= @time %></h3>
+    <div>
+      <ol>
+        <% @tests.each do |t| %>
+          <li><%= t.title %>(<%= t.level %>)</li>
+        <% end %>
+      </ol>
+    </div>
   </body>
-
 </html>
